@@ -7,12 +7,12 @@
       {
         "src": "rename192.png",
         "type": "image/png",
-        "sizes": "192x192",
+        "sizes": "192x192"
       },
       {
         "src": "rename512.png",
         "type": "image/png",
-        "sizes": "512x512",
+        "sizes": "512x512"
       }
     ],
     "start_url": "/Image_Renamer/index.html",
