@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Renamer | Network Testing Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .site-id-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        #siteId {
+            padding: 12px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: 50px;
+            font-size: 1rem;
+            width: 300px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        #siteId:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tab-button {
+            padding: 12px 24px;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-button:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+        
+        .tab-button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .tab-button.active:hover {
+            transform: none;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 0.5rem;
+        }
+        
+        h4 {
+            color: var(--accent);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        h4 i {
+            margin-right: 10px;
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+        }
+        
+        .file-input-container {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-input-container label {
+            width: 120px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .file-input-container input[type="file"] {
+            display: none;
+        }
+        
+        .custom-file-input {
+            padding: 10px 15px;
+            background: var(--light);
+            border: 2px dashed var(--light-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-file-input:hover {
+            border-color: var(--accent);
+            background: rgba(72, 149, 239, 0.05);
+        }
+        
+        .custom-file-input i {
+            color: var(--accent);
+        }
+        
+        .file-name {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-left: 10px;
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .add-more-btn {
+            padding: 8px 15px;
+            background: var(--light);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        .add-more-btn i {
+            margin-right: 5px;
+        }
+        
+        .add-more-btn:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .export-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        #export-button {
+            padding: 15px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        #export-button i {
+            margin-right: 10px;
+        }
+        
+        #export-button:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        #export-button:active {
+            transform: translateY(0);
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--light-gray), transparent);
+            margin: 2rem 0;
+        }
+        
+        .nni-container, .services-container {
+            margin-bottom: 2rem;
+        }
+        
+        .nni-row, .services-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .nni-row label, .services-row label {
+            width: 150px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .file-input-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .file-input-container label {
+                margin-bottom: 0.5rem;
+                width: auto;
+            }
+            
+            .custom-file-input {
+                width: 100%;
+            }
+            
+            .nni-row, .services-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .nni-row label, .services-row label {
+                margin-bottom: 0.5rem;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Renamer</h1>
+            <p class="subtitle">Network Testing Documentation Tool</p>
+            
+            <div class="site-id-container">
+                <input type="text" id="siteId" placeholder="Enter Site ID (e.g., N31)">
+            </div>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-button active" data-tab="preTest">
+                <i class="fas fa-clipboard-check"></i> Pre-Test
+            </button>
+            <button class="tab-button" data-tab="postTest">
+                <i class="fas fa-clipboard-list"></i> Post-Test
+            </button>
+            <button class="tab-button" data-tab="migrationCabling">
+                <i class="fas fa-network-wired"></i> Migration Cabling
+            </button>
+        </div>
+        
+        <div id="preTest" class="tab-content active">
+            <h2><i class="fas fa-clipboard-check"></i> Pre-Test Documentation</h2>
+            
+            <div class="test-section">
+                <h4><i class="fas fa-phone-alt"></i> Calls</h4>
+                <div class="file-input-container">
+                    <label>Call 1:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preCall1-name">No file chosen</span>
+                        <input type="file" id="preCall1" accept="image/*" onchange="updateFileName(this, 'preCall1-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Call 2:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preCall2-name">No file chosen</span>
+                        <input type="file" id="preCall2" accept="image/*" onchange="updateFileName(this, 'preCall2-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Call 3:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preCall3-name">No file chosen</span>
+                        <input type="file" id="preCall3" accept="image/*" onchange="updateFileName(this, 'preCall3-name')">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h4><i class="fas fa-sms"></i> SMS</h4>
+                <div class="file-input-container">
+                    <label>SMS 1:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preSMS1-name">No file chosen</span>
+                        <input type="file" id="preSMS1" accept="image/*" onchange="updateFileName(this, 'preSMS1-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>SMS 2:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preSMS2-name">No file chosen</span>
+                        <input type="file" id="preSMS2" accept="image/*" onchange="updateFileName(this, 'preSMS2-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>SMS 3:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preSMS3-name">No file chosen</span>
+                        <input type="file" id="preSMS3" accept="image/*" onchange="updateFileName(this, 'preSMS3-name')">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h4><i class="fas fa-tachometer-alt"></i> Speedtest</h4>
+                <div class="file-input-container">
+                    <label>Speedtest 1:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preSpeedtest1-name">No file chosen</span>
+                        <input type="file" id="preSpeedtest1" accept="image/*" onchange="updateFileName(this, 'preSpeedtest1-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Speedtest 2:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preSpeedtest2-name">No file chosen</span>
+                        <input type="file" id="preSpeedtest2" accept="image/*" onchange="updateFileName(this, 'preSpeedtest2-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Speedtest 3:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="preSpeedtest3-name">No file chosen</span>
+                        <input type="file" id="preSpeedtest3" accept="image/*" onchange="updateFileName(this, 'preSpeedtest3-name')">
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div id="postTest" class="tab-content">
+            <h2><i class="fas fa-clipboard-list"></i> Post-Test Documentation</h2>
+            
+            <div class="test-section">
+                <h4><i class="fas fa-phone-alt"></i> Calls</h4>
+                <div class="file-input-container">
+                    <label>Call 1:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postCall1-name">No file chosen</span>
+                        <input type="file" id="postCall1" accept="image/*" onchange="updateFileName(this, 'postCall1-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Call 2:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postCall2-name">No file chosen</span>
+                        <input type="file" id="postCall2" accept="image/*" onchange="updateFileName(this, 'postCall2-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Call 3:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postCall3-name">No file chosen</span>
+                        <input type="file" id="postCall3" accept="image/*" onchange="updateFileName(this, 'postCall3-name')">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h4><i class="fas fa-sms"></i> SMS</h4>
+                <div class="file-input-container">
+                    <label>SMS 1:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postSMS1-name">No file chosen</span>
+                        <input type="file" id="postSMS1" accept="image/*" onchange="updateFileName(this, 'postSMS1-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>SMS 2:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postSMS2-name">No file chosen</span>
+                        <input type="file" id="postSMS2" accept="image/*" onchange="updateFileName(this, 'postSMS2-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>SMS 3:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postSMS3-name">No file chosen</span>
+                        <input type="file" id="postSMS3" accept="image/*" onchange="updateFileName(this, 'postSMS3-name')">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h4><i class="fas fa-tachometer-alt"></i> Speedtest</h4>
+                <div class="file-input-container">
+                    <label>Speedtest 1:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postSpeedtest1-name">No file chosen</span>
+                        <input type="file" id="postSpeedtest1" accept="image/*" onchange="updateFileName(this, 'postSpeedtest1-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Speedtest 2:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fas fa-upload"></i>
+                        <span class="file-name" id="postSpeedtest2-name">No file chosen</span>
+                        <input type="file" id="postSpeedtest2" accept="image/*" onchange="updateFileName(this, 'postSpeedtest2-name')">
+                    </label>
+                </div>
+                <div class="file-input-container">
+                    <label>Speedtest 3:</label>
+                    <label class="custom-file-input">
+                        <span>Choose File</span>
+                        <i class="fa
