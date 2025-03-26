@@ -1,0 +1,23 @@
+{
+    "id": "/Image_Renamer/",
+    "short_name": "Image Renamer",
+    "name": "Network Documentation Image Renamer",
+    "description": "Network Documentation Image Renamer.",
+    "icons": [
+      {
+        "src": "rename192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+      },
+      {
+        "src": "rename512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+      }
+    ],
+    "start_url": "/Image_Renamer/index.html",
+    "background_color": "#f9f9f9",
+    "display": "standalone",
+    "scope": "/Image_Renamer/",
+    "theme_color": "#007bff"
+}
