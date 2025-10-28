@@ -804,20 +804,20 @@
                         let newFileName = '';
 
                         if (id.startsWith('preCall')) {
-                            newFileName = `${folderName}_pre_call_${id.slice(-1)}.png`;
+                            newFileName = `${folderName}_pre_call_${id.slice(-1)}.jpg`;
                         } else if (id.startsWith('preSMS')) {
-                            newFileName = `${folderName}_pre_sms_${id.slice(-1)}.png`;
+                            newFileName = `${folderName}_pre_sms_${id.slice(-1)}.jpg`;
                         } else if (id.startsWith('preSpeedtest')) {
-                            newFileName = `${folderName}_pre_speedtest_${id.slice(-1)}.png`;
+                            newFileName = `${folderName}_pre_speedtest_${id.slice(-1)}.jpg`;
                         } else if (id.startsWith('postCall')) {
-                            newFileName = `${folderName}_post_call_${id.slice(-1)}.png`;
+                            newFileName = `${folderName}_post_call_${id.slice(-1)}.jpg`;
                         } else if (id.startsWith('postSMS')) {
-                            newFileName = `${folderName}_post_sms_${id.slice(-1)}.png`;
+                            newFileName = `${folderName}_post_sms_${id.slice(-1)}.jpg`;
                         } else if (id.startsWith('postSpeedtest')) {
-                            newFileName = `${folderName}_post_speedtest_${id.slice(-1)}.png`;
+                            newFileName = `${folderName}_post_speedtest_${id.slice(-1)}.jpg`;
                         } else if (classList.contains('nni-patching')) {
                             const index = Array.from(document.querySelectorAll('.nni-patching')).indexOf(input);
-                            newFileName = `${folderName}_nni_patching_${index + 1}.png`;
+                            newFileName = `${folderName}_nni_patching_${index + 1}.jpg`;
                         } else if (classList.contains('services-patching')) {
                             const index = Array.from(document.querySelectorAll('.services-patching')).indexOf(input);
                             newFileName = `${folderName}_services_patching_${index + 1}.png`;
